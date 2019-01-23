@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APARTMENT">
+          <Key>
+            <PropertyRef Name="POSTAL_CODE" />
+          </Key>
+          <Property Name="POSTAL_CODE" Type="int" Nullable="false" />
+          <Property Name="CITY" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NUM_ROOM" Type="int" Nullable="false" />
+          <Property Name="DETAILS" Type="varchar" MaxLength="150" />
+          <Property Name="PIC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CARS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TYPE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="COLOR" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="YEAR" Type="int" Nullable="false" />
+          <Property Name="DETAILS" Type="varchar" MaxLength="150" />
+          <Property Name="HAND" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CITY" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PIC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OFFERS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PROId" Type="int" Nullable="false" />
+          <Property Name="PERSONID" Type="int" Nullable="false" />
+          <Property Name="PRICE" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="BDATE" Type="date" Nullable="false" />
+          <Property Name="PHONE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CITY" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CREAIT_CARD" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="CVV" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CDATE" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TYPE" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OFFERS_APARTMENT1">
+          <End Role="APARTMENT" Type="Self.APARTMENT" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APARTMENT">
+              <PropertyRef Name="POSTAL_CODE" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PROId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFERS_CARS1">
+          <End Role="CARS" Type="Self.CARS" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PROId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFERS_USER1">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PERSONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="APARTMENT" EntityType="Self.APARTMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARS" EntityType="Self.CARS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OFFERS" EntityType="Self.OFFERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OFFERS_APARTMENT1" Association="Self.FK_OFFERS_APARTMENT1">
+            <End Role="APARTMENT" EntitySet="APARTMENT" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFERS_CARS1" Association="Self.FK_OFFERS_CARS1">
+            <End Role="CARS" EntitySet="CARS" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFERS_USER1" Association="Self.FK_OFFERS_USER1">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APARTMENT">
+          <Key>
+            <PropertyRef Name="POSTAL_CODE" />
+          </Key>
+          <Property Name="POSTAL_CODE" Type="Int32" Nullable="false" />
+          <Property Name="CITY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUM_ROOM" Type="Int32" Nullable="false" />
+          <Property Name="DETAILS" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OFFERS" Relationship="Self.FK_OFFERS_APARTMENT1" FromRole="APARTMENT" ToRole="OFFERS" />
+        </EntityType>
+        <EntityType Name="CAR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COLOR" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YEAR" Type="Int32" Nullable="false" />
+          <Property Name="DETAILS" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="HAND" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OFFERS" Relationship="Self.FK_OFFERS_CARS1" FromRole="CARS" ToRole="OFFERS" />
+        </EntityType>
+        <EntityType Name="OFFER">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PROId" Type="Int32" Nullable="false" />
+          <Property Name="PERSONID" Type="Int32" Nullable="false" />
+          <Property Name="PRICE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="APARTMENT" Relationship="Self.FK_OFFERS_APARTMENT1" FromRole="OFFERS" ToRole="APARTMENT" />
+          <NavigationProperty Name="CAR" Relationship="Self.FK_OFFERS_CARS1" FromRole="OFFERS" ToRole="CARS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_OFFERS_USER1" FromRole="OFFERS" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="BDATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CREAIT_CARD" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CVV" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CDATE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TYPE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OFFERS" Relationship="Self.FK_OFFERS_USER1" FromRole="USER" ToRole="OFFERS" />
+        </EntityType>
+        <Association Name="FK_OFFERS_APARTMENT1">
+          <End Role="APARTMENT" Type="Self.APARTMENT" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APARTMENT">
+              <PropertyRef Name="POSTAL_CODE" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PROId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFERS_CARS1">
+          <End Role="CARS" Type="Self.CAR" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PROId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OFFERS_USER1">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="OFFERS" Type="Self.OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OFFERS">
+              <PropertyRef Name="PERSONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APARTMENTs" EntityType="Self.APARTMENT" />
+          <EntitySet Name="CARS" EntityType="Self.CAR" />
+          <EntitySet Name="OFFERS" EntityType="Self.OFFER" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <AssociationSet Name="FK_OFFERS_APARTMENT1" Association="Self.FK_OFFERS_APARTMENT1">
+            <End Role="APARTMENT" EntitySet="APARTMENTs" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFERS_CARS1" Association="Self.FK_OFFERS_CARS1">
+            <End Role="CARS" EntitySet="CARS" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OFFERS_USER1" Association="Self.FK_OFFERS_USER1">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="OFFERS" EntitySet="OFFERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities4">
+          <EntitySetMapping Name="APARTMENTs">
+            <EntityTypeMapping TypeName="DatabaseModel.APARTMENT">
+              <MappingFragment StoreEntitySet="APARTMENT">
+                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="NUM_ROOM" ColumnName="NUM_ROOM" />
+                <ScalarProperty Name="DETAILS" ColumnName="DETAILS" />
+                <ScalarProperty Name="PIC" ColumnName="PIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARS">
+            <EntityTypeMapping TypeName="DatabaseModel.CAR">
+              <MappingFragment StoreEntitySet="CARS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="COLOR" ColumnName="COLOR" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="DETAILS" ColumnName="DETAILS" />
+                <ScalarProperty Name="HAND" ColumnName="HAND" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="PIC" ColumnName="PIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OFFERS">
+            <EntityTypeMapping TypeName="DatabaseModel.OFFER">
+              <MappingFragment StoreEntitySet="OFFERS">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PROId" ColumnName="PROId" />
+                <ScalarProperty Name="PERSONID" ColumnName="PERSONID" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="DatabaseModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BDATE" ColumnName="BDATE" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="CREAIT_CARD" ColumnName="CREAIT_CARD" />
+                <ScalarProperty Name="CVV" ColumnName="CVV" />
+                <ScalarProperty Name="CDATE" ColumnName="CDATE" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
